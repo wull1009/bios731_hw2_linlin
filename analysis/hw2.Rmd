@@ -1,0 +1,122 @@
+---
+title: "bios731_hw2_linlin"
+output:
+  html_document: default
+  pdf_document: default
+date: "2026-02-07"
+---
+
+https://github.com/wull1009/bios731_hw2_linlin
+
+```{r}
+library(here)
+library(ggplot2)
+```
+
+
+## Problem 1.1 — ADEMP Structure
+
+### A (Aim)
+The aim of this simulation study is to evaluate the finite-sample performance of different methods for constructing 95% confidence intervals for the treatment effect $\beta_{\text{treatment}}$ in a multivariable linear regression model. In particular, we compare the Wald confidence interval, the nonparametric bootstrap percentile confidence interval, and the nonparametric bootstrap-$t$ confidence interval under varying sample sizes, true treatment effects, and error distributions.
+
+### D (Data-generating mechanism)
+Data are generated from the linear model
+$$
+Y_i = \beta_0 + \beta_{\text{treatment}} X_{i1} + Z_i^\top \gamma + \epsilon_i,
+$$
+where $X_{i1}$ is a binary treatment indicator and $Z_i$ is a vector of covariates. The simulation varies the following factors in a full factorial design:
+
+- Sample size: $n \in \{10, 50, 500\}$
+- True treatment effect: $\beta_{\text{treatment}} \in \{0, 0.5, 2\}$
+- Error distribution:
+  - Normal errors: $\epsilon_i \sim N(0, 2)$
+  - Heavy-tailed errors: $\epsilon_i \sim t_3$, scaled so that $\mathrm{Var}(\epsilon_i)=2$
+
+The treatment indicator $X_{i1}$ and covariates $Z_i$ are generated according to fixed distributions specified in the simulation code.
+
+### E (Estimand)
+The estimand of interest is the true regression coefficient $\beta_{\text{treatment}}$, which represents the average treatment effect adjusted for covariates in the linear regression model. Performance is evaluated by comparing the estimated confidence intervals for $\beta_{\text{treatment}}$ to its true value.
+
+### M (Methods)
+For each simulated dataset, a multivariable linear regression model is fitted and 95% confidence intervals for $\beta_{\text{treatment}}$ are constructed using three methods:
+
+1. Wald confidence interval, based on the normal approximation:
+   $$
+   \hat\beta \pm 1.96 \cdot \widehat{\mathrm{se}}(\hat\beta)
+   $$
+2. Nonparametric bootstrap percentile confidence interval, based on the empirical quantiles of $B=500$ bootstrap estimates
+3. Nonparametric bootstrap-$t$ confidence interval, using $B=500$ outer bootstrap samples and $B_{\text{inner}}=100$ inner bootstrap samples to estimate the standard error of each bootstrap replicate
+
+### P (Performance measures)
+Across repeated simulations for each scenario, the following performance measures are computed:
+
+- Bias: the Monte Carlo average of $\hat\beta_{\text{treatment}} - \beta_{\text{treatment}}$
+- Coverage probability: the proportion of 95% confidence intervals that contain the true $\beta_{\text{treatment}}$
+- Standard error behavior: empirical distribution of estimated standard errors
+- Computation time: average runtime required to construct confidence intervals
+
+### the number for simulation scenarios
+we will have 3x3x2 = 18 scenarios.
+
+## Problem 1.2 nSim
+We want the Monte Carlo standard error of the estimated coverage (target $\approx 0.95$) to be no more than 1%. Using the lecture formula,
+$$
+SE\big(\widehat{\text{coverage}}\big) \;=\; \sqrt{\frac{\text{cover}(1-\text{cover})}{n_{\text{sim}}}},
+$$
+we solve:
+$$
+n_{\text{sim}}
+\;=\;
+\frac{0.95(1-0.95)}{(0.01)^2}
+\;=\;
+475.
+$$
+Therefore, we will run $n_{\text{sim}}=475$ simulations per scenario.
+
+## Problem 1.3 Implementation
+
+In this homework, we construct 95% confidence intervals for $\beta_{\text{treatment}}$ using:
+(1) Wald CI, (2) nonparametric bootstrap percentile CI ($B=500$), and
+(3) nonparametric bootstrap-$t$ CI ($B=500$, $B_{\text{inner}}=100$).
+We execute the full factorial simulation study and save one `.rds` file per scenario under `data/scenarios/` (ignored by Git).
+
+```{r run-simulation, eval=FALSE, message=TRUE, warning=FALSE}
+source(here("analysis", "run_simulation.R"))
+```
+
+## Problem 1.4 results summary
+```{r}
+# This script reads data/scenarios/*.rds and writes:
+# - results/summary_table.csv
+# - results/bias_by_scenario.png
+# - results/coverage_by_scenario.png
+# - results/se_distribution.png
+# - results/time_by_scenario.png
+source(here("analysis", "summarize_results.R"))
+```
+
+Summary table (saved to results/summary_table.csv)
+```{r}
+# summarize_results.R should create summary_df in the global environment.
+knitr::kable(head(summary_df, 12), digits = 4,caption = "Summary table (first 12 rows). Full table saved to results/summary_table.csv.")
+
+```
+
+Plots
+
+
+```{r}
+knitr::include_graphics(here("results", "coverage_by_scenario.png"))
+knitr::include_graphics(here("results", "time_by_scenario.png"))
+knitr::include_graphics(here("results", "se_distribution.png"))
+
+```
+
+## Problem 1.5
+
+Across scenarios, the main trade-off is robustness versus computation. The Wald interval is the fastest because it only requires one model fit, but it can under-cover in small samples and is sensitive to departures from normality. The bootstrap percentile interval improves coverage in many non-ideal settings at moderate additional cost. The bootstrap-$t$ interval is the most computationally expensive due to the nested bootstrap, but it tends to be the most reliable when the sampling distribution is far from normal.
+
+In terms of computation time, Wald $\ll$ bootstrap percentile $\ll$ bootstrap-$t$. Under normal errors $\epsilon_i \sim N(0,2)$, all methods approach the nominal 95\% coverage as $n$ increases, and differences are mainly visible at small $n$, where Wald may slightly under-cover. Under heavy-tailed errors, bootstrap-$t$ generally provides the best coverage, bootstrap percentile is usually second best, and Wald performs worst.
+
+A notable interaction is that method differences shrink as $n$ increases, while heavy-tailed errors amplify the weaknesses of Wald-based normal approximations. Practically, Wald is reasonable for large $n$ with approximately normal errors, bootstrap percentile is a good default when mild robustness is needed, and bootstrap-$t$ is preferred for heavy-tailed errors or small samples when accurate coverage is a priority and extra computation is acceptable.
+
