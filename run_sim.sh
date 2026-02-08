@@ -4,7 +4,6 @@
 #SBATCH --partition=wrobel
 #SBATCH -o slurm-%A_%a.out
 #SBATCH -e slurm-%A_%a.err
-mkdir -p logs
 
 module purge
 module load R/4.4.0
