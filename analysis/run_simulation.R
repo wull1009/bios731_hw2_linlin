@@ -16,7 +16,7 @@ source(here("source", "generate_data.R"))
 
 ## ---- simulation parameters ----
 alpha   <- 0.05
-n_sim   <- 475      
+n_sim   <- 2      
 B       <- 500
 B_inner <- 100
 
@@ -81,7 +81,6 @@ for (r in seq_len(n_sim)) {
   theta_hat_vec[r] <- theta_hat
   se_hat_vec[r]    <- se_hat
   
-  ## 用位置取，避免名字出现 lower.x / upper.x 之类问题
   wald_lo[r] <- CI_wald[1]
   wald_hi[r] <- CI_wald[2]
   

@@ -13,7 +13,9 @@ for (b in 1:B) {
   dat_star  <- dat[idx_outer, , drop = FALSE]
   
   fit_star <- lm(y ~ x + ., data = dat_star)
-  boot_theta[b] <- coef(fit_star)["x"]
+  bb <- coef(fit_star)
+  boot_theta[b] <- if ("x" %in% names(bb)) unname(bb["x"]) else NA_real_
+  
   
   theta_inner <- rep(NA_real_, K)
   
@@ -22,7 +24,9 @@ for (b in 1:B) {
     dat_star2 <- dat_star[idx_inner, , drop = FALSE]
     
     fit_star2 <- lm(y ~ x + ., data = dat_star2)
-    theta_inner[k] <- coef(fit_star2)["x"]
+    bb2 <- coef(fit_star2)
+    theta_inner[k] <- if ("x" %in% names(bb2)) unname(bb2["x"]) else NA_real_
+    
   }
   
   boot_se[b] <- sd(theta_inner, na.rm = TRUE)

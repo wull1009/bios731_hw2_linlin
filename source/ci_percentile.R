@@ -9,7 +9,9 @@ for (b in 1:B) {
   dat_star <- dat[idx, , drop = FALSE]
   
   fit_star <- lm(y ~ x + ., data = dat_star)
-  boot_theta_pct[b] <- coef(fit_star)["x"]
+  bb <- coef(fit_star)
+  boot_theta_pct[b] <- if ("x" %in% names(bb)) unname(bb["x"]) else NA_real_
+  
 }
 
 qs <- as.numeric(quantile(boot_theta_pct,
