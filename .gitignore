@@ -1,4 +1,12 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+# Ignore simulation intermediate outputs
+data/scenarios/
+data/scenarios/*.rds
+data/scenarios/*.Rds
+data/scenarios/*.rda
+data/scenarios/*.Rda
+
+# macOS junk
+.DS_Store
+
+# RStudio user settings
+.Rproj.user/

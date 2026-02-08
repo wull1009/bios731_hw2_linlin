@@ -81,8 +81,10 @@ In this homework, we construct 95% confidence intervals for $\beta_{\text{treatm
 We execute the full factorial simulation study and save one `.rds` file per scenario under `data/scenarios/` (ignored by Git).
 
 ```{r run-simulation, eval=FALSE, message=TRUE, warning=FALSE}
-source(here("analysis", "run_simulation.R"))
+# source(here("analysis", "run_simulation.R"))
 ```
+
+since the simulation is large here, we run the simulations on the cluster.
 
 ## Problem 1.4 results summary
 ```{r}
