@@ -1,4 +1,5 @@
 ## analysis/run_simulation.R
+library(here)
 source(here("source", "generate_data.R"))
 
 RNGkind("L'Ecuyer-CMRG")
