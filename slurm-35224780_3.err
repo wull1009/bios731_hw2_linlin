@@ -8,3 +8,5 @@ During startup - Warning messages:
 7: Setting LC_MEASUREMENT failed, using "C" 
 here() starts at /projects/wrobel/users/linlin/bios731_hw2_linlin
 Running scenario 3: n=500, beta_treat=0, error_type=normal
+Saved: /projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios/scenario_03_n500_bt0_errnormal.rds
+DONE.

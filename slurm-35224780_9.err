@@ -11,3 +11,5 @@ Warning message:
 In dir.create(out_dir, recursive = TRUE) :
   '/projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios' already exists
 Running scenario 9: n=500, beta_treat=2, error_type=normal
+Saved: /projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios/scenario_09_n500_bt2_errnormal.rds
+DONE.

@@ -7,6 +7,6 @@ During startup - Warning messages:
 6: Setting LC_PAPER failed, using "C" 
 7: Setting LC_MEASUREMENT failed, using "C" 
 here() starts at /projects/wrobel/users/linlin/bios731_hw2_linlin
-Running scenario 14: n=50, beta_treat=0.5, error_type=t3
-Saved: /projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios/scenario_14_n50_bt0p5_errt3.rds
+Running scenario 17: n=50, beta_treat=2, error_type=t3
+Saved: /projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios/scenario_17_n50_bt2_errt3.rds
 DONE.
