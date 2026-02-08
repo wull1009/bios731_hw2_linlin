@@ -8,7 +8,6 @@ set.seed(2024)
 
 ## ---- read SLURM array task id ----
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) < 1) stop("Need 1 argument: JOBID (1..18).")
 JOBID <- as.integer(args[1])
 if (!is.finite(JOBID)) stop("JOBID must be an integer.")
 
@@ -17,7 +16,7 @@ source(here("source", "generate_data.R"))
 
 ## ---- simulation parameters ----
 alpha   <- 0.05
-n_sim   <- 2      
+n_sim   <- 475      
 B       <- 500
 B_inner <- 100
 
