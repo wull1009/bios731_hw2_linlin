@@ -16,7 +16,7 @@ source(here("source", "generate_data.R"))
 
 ## ---- simulation parameters ----
 alpha   <- 0.05
-n_sim   <- 2      
+n_sim   <- 475      
 B       <- 500
 B_inner <- 100
 
