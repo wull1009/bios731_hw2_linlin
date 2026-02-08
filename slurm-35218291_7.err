@@ -8,3 +8,7 @@ During startup - Warning messages:
 7: Setting LC_MEASUREMENT failed, using "C" 
 here() starts at /projects/wrobel/users/linlin/bios731_hw2_linlin
 Running scenario 7: n=10, beta_treat=2, error_type=normal
+Error in summary(fit0)$coefficients["x", "Std. Error"] : 
+  subscript out of bounds
+Calls: source -> withVisible -> eval -> eval
+Execution halted
