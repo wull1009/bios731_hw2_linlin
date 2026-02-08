@@ -1,0 +1,15 @@
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+6: Setting LC_PAPER failed, using "C" 
+7: Setting LC_MEASUREMENT failed, using "C" 
+here() starts at /projects/wrobel/users/linlin/bios731_hw2_linlin
+Warning message:
+In dir.create(out_dir, recursive = TRUE) :
+  '/projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios' already exists
+Running scenario 4: n=10, beta_treat=0.5, error_type=normal
+Saved: /projects/wrobel/users/linlin/bios731_hw2_linlin/data/scenarios/scenario_04_n10_bt0p5_errnormal.rds
+DONE.
